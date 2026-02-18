@@ -21,6 +21,7 @@ Shipp Skills teach AI agents (Claude Code, coding assistants, autonomous agents)
 |---|---|
 | [shipp](./skills/shipp/) | Real-time data connector — fetch live event streams (sports, and more) via the Shipp API |
 | [kalshi](./skills/kalshi/) | Regulated prediction market exchange — market data, trading, portfolio management, WebSocket streaming |
+| [metaculus](./skills/metaculus/) | Forecasting platform — browse questions, submit forecasts, read community predictions, CDF generation, comments |
 | [polymarket](./skills/polymarket/) | Decentralized prediction market on Polygon — market discovery, CLOB trading, orderbooks, WebSocket streaming, CTF operations |
 
 ## Quick Start
@@ -28,6 +29,7 @@ Shipp Skills teach AI agents (Claude Code, coding assistants, autonomous agents)
 1. **Get your API keys**
    - [Shipp API Key](https://platform.shipp.ai/signup) — for real-time data
    - [Kalshi API Key](https://help.kalshi.com/account/demo-account) — for prediction market trading (demo account recommended)
+   - [Metaculus API Token](https://www.metaculus.com/accounts/settings/account/#api-access) — for forecasting platform access (all endpoints require auth)
    - [Polymarket Wallet](https://docs.polymarket.com/quickstart/overview.md) — for decentralized prediction market trading (Ethereum private key + funded Polygon wallet with USDCe; read-only market data requires no auth)
 
 2. **Add the skills** to your agent's context via [ClawHub](https://clawhub.ai/kclonts/shipp) or by referencing the `SKILL.md` files directly.
@@ -81,6 +83,7 @@ yarn migrate
 | Shipp Dashboard | [platform.shipp.ai](https://platform.shipp.ai) |
 | Kalshi Docs | [docs.kalshi.com](https://docs.kalshi.com) |
 | Kalshi LLM Docs | [docs.kalshi.com](https://docs.kalshi.com/llms.txt) |
+| Metaculus API Docs | [metaculus.com/api](https://www.metaculus.com/api/) |
 | Polymarket Docs | [docs.polymarket.com](https://docs.polymarket.com) |
 | Polymarket LLM Docs | [docs.polymarket.com/llms.txt](https://docs.polymarket.com/llms.txt) |
 | Alph Bot | [gitlab.com/outsharp/shipp/alph-bot](https://gitlab.com/outsharp/shipp/alph-bot) |
