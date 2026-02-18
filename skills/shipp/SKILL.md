@@ -6,7 +6,7 @@ description: >
 
 metadata:
   author: Outsharp Inc.
-  version: 0.1.3
+  version: 0.1.4
 
 compatibility:
   requirements:
