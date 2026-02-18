@@ -80,8 +80,9 @@ yarn migrate
 | Shipp API Reference | [docs.shipp.ai/api-reference](https://docs.shipp.ai/api-reference/) |
 | Shipp Dashboard | [platform.shipp.ai](https://platform.shipp.ai) |
 | Kalshi Docs | [docs.kalshi.com](https://docs.kalshi.com) |
+| Kalshi LLM Docs | [docs.kalshi.com](https://docs.kalshi.com/llms.txt) |
 | Polymarket Docs | [docs.polymarket.com](https://docs.polymarket.com) |
-| Polymarket LLM Reference | [docs.polymarket.com/llms.txt](https://docs.polymarket.com/llms.txt) |
+| Polymarket LLM Docs | [docs.polymarket.com/llms.txt](https://docs.polymarket.com/llms.txt) |
 | Alph Bot | [gitlab.com/outsharp/shipp/alph-bot](https://gitlab.com/outsharp/shipp/alph-bot) |
 
 ## License
