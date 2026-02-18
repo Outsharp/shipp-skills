@@ -11,6 +11,7 @@ metadata:
 compatibility:
   requirements:
     - Internet access
+    - Shipp API Key (Get from https://platform.shipp.ai)
   notes:
     - All endpoints require authorization via API key.
     - Requests and responses are JSON.
