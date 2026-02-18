@@ -6,7 +6,7 @@ description: >
 
 metadata:
   author: Outsharp Inc.
-  version: 0.1.0
+  version: 0.1.3
 
 compatibility:
   requirements:
@@ -16,7 +16,9 @@ compatibility:
     - Requests and responses are JSON.
 
 allowed-tools:
-  - Bash(curl:*)
+  - Bash(curl:https://docs.shipp.ai/*)
+  - Bash(curl:https://api.shipp.ai/*)
+  - Bash(curl:https://platform.shipp.ai/*)
   - Bash(jq:*)
 
 ---
@@ -27,7 +29,7 @@ allowed-tools:
 
 [Create an API Key](https://platform.shipp.ai)
 
-Check back to this skill _FREQUENTLY_. Reference the api and [docs](https://docs.shipp.ai).
+Reference [docs](https://docs.shipp.ai).
 
 Implement as many tests as possible as soon as possible.
 Verify data and how the app uses data.
