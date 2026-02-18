@@ -31,7 +31,7 @@ Check back to this skill _FREQUENTLY_. Reference the api and [docs](https://docs
 
 Implement as many tests as possible as soon as possible.
 Verify data and how the app uses data.
-Be flexible in schema.
+Be flexible in schema — event rows are schema-flexible JSON and fields vary by sport, feed, and event.
 
 Base prefix:
 
@@ -148,11 +148,81 @@ Include an `Accept-Encoding` header to receive compressed responses (`zstd`, `gz
 ## Usage Tips
 
 - Keep `filter_instructions` short, explicit, and testable. Mention the sport/league and scope.
-- Store and reuse `connection_id` — don't create a new connection per run.
-- Use `since_event_id` for efficient polling (cursor-based pagination).
+- Store and reuse `connection_id` — don't create a new connection per run. Creating connections has time and credit overhead.
+- Use `since_event_id` for efficient polling (cursor-based pagination). Send the lexicographically largest event ID you've received.
 - Use the schedule endpoint to discover `game_id`s and team names before creating connections.
 - Surface error `hint` messages directly to users when limits are hit.
+- Treat every field in `data[]` as optional — use existence checks and graceful fallbacks.
+- Log unknown data shapes in development so you can refine `filter_instructions`.
+- Polling interval: 5–30 seconds depending on domain and cost sensitivity.
+- Deduplicate events by keeping a rolling set of seen event IDs.
 - Consult the [how-to guides](https://docs.shipp.ai/how-to/) for end-to-end integration walkthroughs.
+
+---
+
+## Integration Pattern: "Real-Time Contract"
+
+When building a feature powered by Shipp, define a contract for each screen or agent loop:
+
+1. **User promise** — what must stay accurate while the user (or agent) is watching?
+2. **Triggering events** — what changes should cause UI updates or agent actions?
+3. **Data shape needed** — what fields do you need to render or decide?
+4. **Freshness window** — how old can the last update be before you warn the user?
+5. **Failure mode** — what do you show/do if updates stop arriving?
+
+Then translate the contract into `filter_instructions` when creating the connection.
+
+---
+
+## Example Project: Alph Bot
+
+[**Alph Bot**](https://gitlab.com/outsharp/shipp/alph-bot) is an open-source automated trading bot that uses Shipp for real-time sports data and trades on prediction markets (Kalshi). It demonstrates a production-quality integration of the Shipp API.
+
+### How Alph Bot Uses Shipp
+
+1. **Game discovery** — Uses `GET /api/v1/sports/{sport}/schedule` to list available games:
+   ```
+   ./index.ts available-games --sport NBA
+   ```
+
+2. **Connection creation** — Creates a Shipp connection for a specific game, describing what events to track via `filter_instructions`.
+
+3. **Live polling** — Runs the connection on an interval, using `since_event_id` for cursor-based pagination to receive only new events since the last poll.
+
+4. **AI analysis** — Feeds the schema-flexible `data[]` events directly to Claude AI, which analyzes game state and estimates outcome probabilities.
+
+5. **Trading decisions** — Compares AI-estimated probabilities against Kalshi market prices to find value bets.
+
+### Alph Bot's Shipp Configuration
+
+From its `.env.example`:
+```
+ALPH_BOT_SHIPP_API_KEY=shipp_01JK2MF5A9NQR7WX3YGVB8DTCH
+ALPH_BOT_SPORT=NBA
+ALPH_BOT_GAME=01JG4QR8V2KXM0DP5N7YCBW3HT
+```
+
+### Key Takeaways from Alph Bot
+
+- **Reuse connections** — Alph Bot creates a connection once and polls it repeatedly, avoiding unnecessary creation overhead.
+- **Cursor pagination** — Uses `since_event_id` so each poll only returns new events, keeping responses fast and costs low.
+- **Defensive data handling** — Treats all fields as optional since the data shape varies by sport, game phase, and event type.
+- **Schedule-first workflow** — Discovers game IDs via the schedule endpoint before creating targeted connections.
+
+### Try It
+
+```
+git clone https://gitlab.com/outsharp/shipp/alph-bot.git
+cd alph-bot
+cp .env.example .env
+# Add your Shipp, Kalshi, and Anthropic API keys
+
+yarn migrate
+./index.ts available-games --sport NBA
+./index.ts value-bet -d --paper --game <GAME_ID>
+```
+
+See the [Alph Bot README](https://gitlab.com/outsharp/shipp/alph-bot) for full setup instructions.
 
 ---
 
