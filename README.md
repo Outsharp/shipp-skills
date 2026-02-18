@@ -4,7 +4,10 @@ Skills for [Shipp](https://shipp.ai) — the real-time data connector for AI bui
 
 Available on [ClawHub](https://clawhub.ai/kclonts/shipp)
 
-Install with `npx skills add outsharp/shipp-skills`
+To install, run in your terminal (Or ask Claude, Codex etc.)
+```bash
+npx skills add outsharp/shipp-skills
+```
 
 ---
 
