@@ -178,14 +178,11 @@ Then translate the contract into `filter_instructions` when creating the connect
 
 ## Example Project: Alph Bot
 
-[**Alph Bot**](https://gitlab.com/outsharp/shipp/alph-bot) is an open-source automated trading bot that uses Shipp for real-time sports data and trades on prediction markets (Kalshi). It demonstrates a production-quality integration of the Shipp API.
+[**Alph Bot**](https://gitlab.com/outsharp/shipp/alph-bot) is an open-source automated trading bot that uses Shipp for real-time sports data and trades on prediction markets. It demonstrates a production-quality integration of the Shipp API.
 
 ### How Alph Bot Uses Shipp
 
 1. **Game discovery** — Uses `GET /api/v1/sports/{sport}/schedule` to list available games:
-   ```
-   ./index.ts available-games --sport NBA
-   ```
 
 2. **Connection creation** — Creates a Shipp connection for a specific game, describing what events to track via `filter_instructions`.
 
@@ -195,34 +192,12 @@ Then translate the contract into `filter_instructions` when creating the connect
 
 5. **Trading decisions** — Compares AI-estimated probabilities against Kalshi market prices to find value bets.
 
-### Alph Bot's Shipp Configuration
-
-From its `.env.example`:
-```
-ALPH_BOT_SHIPP_API_KEY=shipp_01JK2MF5A9NQR7WX3YGVB8DTCH
-ALPH_BOT_SPORT=NBA
-ALPH_BOT_GAME=01JG4QR8V2KXM0DP5N7YCBW3HT
-```
-
 ### Key Takeaways from Alph Bot
 
 - **Reuse connections** — Alph Bot creates a connection once and polls it repeatedly, avoiding unnecessary creation overhead.
 - **Cursor pagination** — Uses `since_event_id` so each poll only returns new events, keeping responses fast and costs low.
 - **Defensive data handling** — Treats all fields as optional since the data shape varies by sport, game phase, and event type.
 - **Schedule-first workflow** — Discovers game IDs via the schedule endpoint before creating targeted connections.
-
-### Try It
-
-```
-git clone https://gitlab.com/outsharp/shipp/alph-bot.git
-cd alph-bot
-cp .env.example .env
-# Add your Shipp, Kalshi, and Anthropic API keys
-
-yarn migrate
-./index.ts available-games --sport NBA
-./index.ts value-bet -d --paper --game <GAME_ID>
-```
 
 See the [Alph Bot README](https://gitlab.com/outsharp/shipp/alph-bot) for full setup instructions.
 
