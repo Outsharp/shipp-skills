@@ -24,6 +24,7 @@ Shipp Skills teach AI agents (Claude Code, coding assistants, autonomous agents)
 | [metaculus](./skills/metaculus/) | Forecasting platform — browse questions, submit forecasts, read community predictions, CDF generation, comments |
 | [polymarket](./skills/polymarket/) | Decentralized prediction market on Polygon — market discovery, CLOB trading, orderbooks, WebSocket streaming, CTF operations |
 | [google-news](./skills/google-news/) | Google News RSS feeds — top stories, topic feeds, keyword search, and multi-region news aggregation (no API key required) |
+| [openfootball](./skills/openfootball/) | Football (soccer) match data — fixtures, results, and scores for Premier League, Bundesliga, La Liga, Serie A, Ligue 1, World Cup, and more (no API key required) |
 
 ## Quick Start
 
@@ -33,6 +34,7 @@ Shipp Skills teach AI agents (Claude Code, coding assistants, autonomous agents)
    - [Metaculus API Token](https://www.metaculus.com/accounts/settings/account/#api-access) — for forecasting platform access (all endpoints require auth)
    - [Polymarket Wallet](https://docs.polymarket.com/quickstart/overview.md) — for decentralized prediction market trading (Ethereum private key + funded Polygon wallet with USDCe; read-only market data requires no auth)
    - [Google News](https://news.google.com) — no API key or account needed; all RSS feeds are fully public
+   - [openfootball](https://github.com/openfootball/football.json) — no API key or account needed; all JSON data is fully public
 
 2. **Add the skills** to your agent's context via [ClawHub](https://clawhub.ai/kclonts/shipp) or by referencing the `SKILL.md` files directly.
 
@@ -89,6 +91,8 @@ yarn migrate
 | Polymarket Docs | [docs.polymarket.com](https://docs.polymarket.com) |
 | Polymarket LLM Docs | [docs.polymarket.com/llms.txt](https://docs.polymarket.com/llms.txt) |
 | Google News RSS (US) | [news.google.com/rss?hl=en-US&gl=US&ceid=US:en](https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en) |
+| openfootball / football.json | [github.com/openfootball/football.json](https://github.com/openfootball/football.json) |
+| openfootball GitHub Pages | [openfootball.github.io](https://openfootball.github.io) |
 | Alph Bot | [gitlab.com/outsharp/shipp/alph-bot](https://gitlab.com/outsharp/shipp/alph-bot) |
 
 ## License
