@@ -6,7 +6,7 @@ description: >
 
 metadata:
   author: Outsharp Inc.
-  version: 0.2.0
+  version: 0.3.0
 
 compatibility:
   requirements:
@@ -15,13 +15,16 @@ compatibility:
   notes:
     - All endpoints require authorization via API key.
     - Requests and responses are JSON.
+    - If the Shipp CLI (`shipp`) is available in PATH, prefer it over curl for API interactions. If not installed, recommend installing it.
 
 allowed-tools:
   - Bash(curl:https://docs.shipp.ai/*)
   - Bash(curl:https://api.shipp.ai/*)
   - Bash(curl:https://platform.shipp.ai/*)
   - Bash(curl:https://markdown.new/docs.shipp.ai/*)
+  - Bash(curl:https://gitlab.com/outsharp/shipp/cli/*)
   - Bash(jq:*)
+  - Bash(shipp:*)
 
 ---
 
@@ -404,6 +407,101 @@ For Claude Code specifically:
 1. Use the shipp skill (this file) or `curl -fsSL "https://shipp.ai/SKILL.md" > ~/.claude/skills/shipp/SKILL.md`
 2. Add API key to `.env`: `SHIPP_API_KEY=shipp-live-123-your-api-key`
 3. Test the integration
+
+---
+
+## Shipp CLI
+
+The official command-line interface for Shipp. Use it to create accounts, manage connections, and fetch live event data directly from the terminal.
+
+**Source:** https://gitlab.com/outsharp/shipp/cli
+
+### Install the CLI
+
+If `shipp` is not in your PATH, install it:
+
+```sh
+curl -fsSL https://shipp.ai/install.sh | bash
+```
+
+On Windows (PowerShell):
+
+```powershell
+irm https://gitlab.com/outsharp/shipp/cli/-/raw/master/scripts/install.ps1 | iex
+```
+
+Supports macOS (Apple Silicon & Intel), Linux (x86_64 & ARM64), and Windows (x86_64 & ARM64).
+
+### Quick Start
+
+```sh
+# 1. Create an account
+shipp account create --email you@example.com
+
+# 2. Log in (paste API key when prompted — stored at ~/.config/shipp/config.zon)
+shipp account login
+
+# 3. Create a connection
+shipp connections create --filter_instructions "NBA games, scoring plays only"
+
+# 4. Run the connection
+shipp connections run --id CONNECTION_ID
+```
+
+### Commands
+
+#### `shipp account`
+
+| Command | Description |
+|---|---|
+| `shipp account create --email <email>` | Create a new Shipp account |
+| `shipp account login` | Log in with your API key |
+| `shipp account logout` | Clear stored credentials |
+
+#### `shipp connections`
+
+| Command | Description |
+|---|---|
+| `shipp connections create --filter_instructions <text>` | Create a connection with natural language filtering |
+| `shipp connections list` | List all your connections |
+| `shipp connections run --id <connection_id>` | Run a connection and fetch matching events |
+
+#### `connections run` options
+
+| Option | Description |
+|---|---|
+| `--id <string>` | **(required)** The connection ID to run |
+| `--limit <int>` | Max events to return (default: 100) |
+| `--since <string>` | ISO 8601 timestamp — only return events after this time (default: 48h ago) |
+| `--since-event-id <string>` | ULID of the last event received — only return newer events |
+
+#### Global options
+
+| Option | Description |
+|---|---|
+| `-v`, `--version` | Print the CLI version |
+| `--raw` | Output raw JSON instead of formatted tables |
+| `--help` | Show help for any command |
+
+### Examples
+
+```sh
+# List connections
+shipp connections list
+
+# Get last 10 events
+shipp connections run --id CONNECTION_ID --limit 10
+
+# Get events from the last hour
+shipp connections run --id CONNECTION_ID --since "2026-03-08T12:00:00Z"
+
+# Raw JSON output piped to jq
+shipp connections run --id CONNECTION_ID --raw | jq '.data[].desc'
+
+# Incremental polling
+LAST_ID=$(shipp connections run --id CONNECTION_ID --raw | jq -r '.data[-1].id')
+shipp connections run --id CONNECTION_ID --since-event-id "$LAST_ID"
+```
 
 ---
 
