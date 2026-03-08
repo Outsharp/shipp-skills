@@ -19,6 +19,7 @@ compatibility:
 
 allowed-tools:
   - Bash(curl:https://docs.shipp.ai/*)
+  - Bash(curl:https://shipp.ai/*)
   - Bash(curl:https://api.shipp.ai/*)
   - Bash(curl:https://platform.shipp.ai/*)
   - Bash(curl:https://markdown.new/docs.shipp.ai/*)
